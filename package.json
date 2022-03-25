@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest",
     "test:staged": "jest",
-    "test:clear": "jest --clearCache"
+    "test:clear": "jest --clearCache",
+    "lint": "eslint 'src/**'"
   },
   "devDependencies": {
     "@types/jest": "^27.4.1",
