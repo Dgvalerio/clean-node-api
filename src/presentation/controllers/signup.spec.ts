@@ -1,6 +1,7 @@
 import { SignUpController, SignUpDto } from '@/presentation/controllers/signup';
 import { InvalidParamError } from '@/presentation/errors/invalid-param-error';
 import { MissingParamError } from '@/presentation/errors/missing-param-error';
+import { ServerError } from '@/presentation/errors/server-error';
 import { EmailValidator } from '@/presentation/protocols/email-validator';
 import { HttpRequest } from '@/presentation/protocols/http';
 
@@ -100,5 +101,19 @@ describe('SignUp Controller', () => {
     expect(httpResponse.body).toEqual(new InvalidParamError('email'));
     expect(emailValidatorStub.isValid).toHaveBeenCalledTimes(1);
     expect(emailValidatorStub.isValid).toHaveBeenCalledWith(email);
+  });
+
+  test('Should return 500 if EmailValidator throws', () => {
+    const { sut, emailValidatorStub } = makeSut();
+    const httpRequest = httpRequestFake();
+
+    jest.spyOn(emailValidatorStub, 'isValid').mockImplementation(() => {
+      throw new Error();
+    });
+
+    const httpResponse = sut.handle(httpRequest);
+
+    expect(httpResponse.statusCode).toBe(500);
+    expect(httpResponse.body).toEqual(new ServerError());
   });
 });
