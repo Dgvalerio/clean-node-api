@@ -1,5 +1,6 @@
 import { MissingParamError } from '@/presentation/errors/missing-param-error';
 import { badRequest } from '@/presentation/helpers/http-helper';
+import { Controller } from '@/presentation/protocols/controller';
 import { HttpRequest, HttpResponse } from '@/presentation/protocols/http';
 
 export interface SignUpDto {
@@ -9,7 +10,7 @@ export interface SignUpDto {
   passwordConfirmation?: string;
 }
 
-export class SignUpController {
+export class SignUpController implements Controller {
   handle(httpRequest: HttpRequest<SignUpDto>): HttpResponse {
     const requiredFields: (keyof SignUpDto)[] = [
       'name',
