@@ -5,6 +5,7 @@
   "license": "MIT",
   "scripts": {
     "test": "jest",
+    "test:watch": "jest --watch",
     "test:staged": "jest",
     "test:clear": "jest --clearCache",
     "lint": "eslint 'src/**'"
