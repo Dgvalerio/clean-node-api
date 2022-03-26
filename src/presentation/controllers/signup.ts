@@ -1,7 +1,6 @@
 import { InvalidParamError } from '@/presentation/errors/invalid-param-error';
 import { MissingParamError } from '@/presentation/errors/missing-param-error';
-import { ServerError } from '@/presentation/errors/server-error';
-import { badRequest } from '@/presentation/helpers/http-helper';
+import { badRequest, serverError } from '@/presentation/helpers/http-helper';
 import { Controller } from '@/presentation/protocols/controller';
 import { EmailValidator } from '@/presentation/protocols/email-validator';
 import { HttpRequest, HttpResponse } from '@/presentation/protocols/http';
@@ -39,10 +38,7 @@ export class SignUpController implements Controller {
 
       if (!emailIsValid) return badRequest(new InvalidParamError('email'));
     } catch (err) {
-      return {
-        statusCode: 500,
-        body: new ServerError(),
-      };
+      return serverError();
     }
   }
 }
