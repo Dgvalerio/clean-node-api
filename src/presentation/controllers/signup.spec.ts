@@ -11,7 +11,7 @@ const httpRequestFake = (): HttpRequest<SignUpDto> => ({
     name: 'any_name',
     email: 'any_email',
     password: 'any_password',
-    passwordConfirmation: 'any_passwordConfirmation',
+    passwordConfirmation: 'any_password',
   },
 });
 
@@ -89,6 +89,21 @@ describe('SignUp Controller', () => {
     expect(httpResponse.statusCode).toBe(400);
     expect(httpResponse.body).toEqual(
       new MissingParamError('passwordConfirmation')
+    );
+  });
+
+  test('Should return 400 if no password confirmation fails', () => {
+    const { sut } = makeSut();
+    const httpRequest = httpRequestFake();
+
+    httpRequest.body.password = '123';
+    httpRequest.body.passwordConfirmation = '456';
+
+    const httpResponse = sut.handle(httpRequest);
+
+    expect(httpResponse.statusCode).toBe(400);
+    expect(httpResponse.body).toEqual(
+      new InvalidParamError('passwordConfirmation')
     );
   });
 
