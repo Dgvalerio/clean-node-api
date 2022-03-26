@@ -17,10 +17,10 @@ import {
 
 const httpRequestFake = (): HttpRequest<SignUpDto> => ({
   body: {
-    name: 'any_name',
-    email: 'any_email',
-    password: 'any_password',
-    passwordConfirmation: 'any_password',
+    name: 'valid_name',
+    email: 'valid_email',
+    password: 'valid_password',
+    passwordConfirmation: 'valid_password',
   },
 });
 
@@ -188,6 +188,21 @@ describe('SignUp Controller', () => {
 
     expect(addAccountStub.add).toHaveBeenCalledTimes(1);
     expect(addAccountStub.add).toHaveBeenCalledWith({
+      name: httpRequest.body.name,
+      email: httpRequest.body.email,
+      password: httpRequest.body.password,
+    });
+  });
+
+  test('Should return 200 if valid data is provided', () => {
+    const { sut } = makeSut();
+    const httpRequest = httpRequestFake();
+
+    const httpResponse = sut.handle(httpRequest);
+
+    expect(httpResponse.statusCode).toBe(200);
+    expect(httpResponse.body).toEqual({
+      id: 'valid_id',
       name: httpRequest.body.name,
       email: httpRequest.body.email,
       password: httpRequest.body.password,
