@@ -11,9 +11,12 @@ export interface SignUpDto {
 
 export class SignUpController {
   handle(httpRequest: HttpRequest<SignUpDto>): HttpResponse {
-    if (!httpRequest.body.name)
-      return badRequest(new MissingParamError('name'));
-    if (!httpRequest.body.email)
-      return badRequest(new MissingParamError('email'));
+    const requiredFields: (keyof SignUpDto)[] = ['name', 'email'];
+
+    const invalidField = requiredFields.find(
+      (field) => !httpRequest.body[field]
+    );
+
+    if (invalidField) return badRequest(new MissingParamError(invalidField));
   }
 }
