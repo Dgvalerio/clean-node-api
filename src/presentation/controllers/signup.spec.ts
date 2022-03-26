@@ -4,8 +4,7 @@ import {
   MissingParamError,
   ServerError,
 } from '@/presentation/errors';
-import { EmailValidator } from '@/presentation/protocols/email-validator';
-import { HttpRequest } from '@/presentation/protocols/http';
+import { EmailValidator, HttpRequest } from '@/presentation/protocols';
 
 const httpRequestFake = (): HttpRequest<SignUpDto> => ({
   body: {

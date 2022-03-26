@@ -1,8 +1,11 @@
 import { InvalidParamError, MissingParamError } from '@/presentation/errors';
 import { badRequest, serverError } from '@/presentation/helpers/http-helper';
-import { Controller } from '@/presentation/protocols/controller';
-import { EmailValidator } from '@/presentation/protocols/email-validator';
-import { HttpRequest, HttpResponse } from '@/presentation/protocols/http';
+import {
+  Controller,
+  EmailValidator,
+  HttpRequest,
+  HttpResponse,
+} from '@/presentation/protocols';
 
 export interface SignUpDto {
   name?: string;
