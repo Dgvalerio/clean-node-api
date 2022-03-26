@@ -1,10 +1,11 @@
-import { SignUpController } from '@/presentation/controllers/signup';
+import { SignUpController, SignUpDto } from '@/presentation/controllers/signup';
+import { HttpRequest } from '@/presentation/protocols/http';
 
 describe('SignUp Controller', () => {
   test('Should return 400 if no name is provided', () => {
     const sut = new SignUpController();
 
-    const httpRequest = {
+    const httpRequest: HttpRequest<SignUpDto> = {
       body: {
         email: 'any_email',
         password: 'any_password',
@@ -21,7 +22,7 @@ describe('SignUp Controller', () => {
   test('Should return 400 if no email is provided', () => {
     const sut = new SignUpController();
 
-    const httpRequest = {
+    const httpRequest: HttpRequest<SignUpDto> = {
       body: {
         name: 'any_name',
         password: 'any_password',
