@@ -1,12 +1,19 @@
-import { AccountModel } from '@/domain/models/account';
-import { AddAccount, AddAccountModel } from '@/domain/usecases/add-account';
-import { SignUpController, SignUpDto } from '@/presentation/controllers/signup';
+import {
+  SignUpController,
+  SignUpDto,
+} from '@/presentation/controllers/signup/signup';
+import {
+  AccountModel,
+  AddAccount,
+  AddAccountModel,
+  EmailValidator,
+  HttpRequest,
+} from '@/presentation/controllers/signup/signup-protocols';
 import {
   InvalidParamError,
   MissingParamError,
   ServerError,
 } from '@/presentation/errors';
-import { EmailValidator, HttpRequest } from '@/presentation/protocols';
 
 const httpRequestFake = (): HttpRequest<SignUpDto> => ({
   body: {

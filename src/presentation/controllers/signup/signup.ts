@@ -1,12 +1,12 @@
-import { AddAccount } from '@/domain/usecases/add-account';
-import { InvalidParamError, MissingParamError } from '@/presentation/errors';
-import { badRequest, serverError } from '@/presentation/helpers/http-helper';
 import {
+  AddAccount,
   Controller,
   EmailValidator,
   HttpRequest,
   HttpResponse,
-} from '@/presentation/protocols';
+} from '@/presentation/controllers/signup/signup-protocols';
+import { InvalidParamError, MissingParamError } from '@/presentation/errors';
+import { badRequest, serverError } from '@/presentation/helpers/http-helper';
 
 export interface SignUpDto {
   name?: string;
