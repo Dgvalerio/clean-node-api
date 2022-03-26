@@ -11,7 +11,7 @@ export interface SignUpDto {
 
 export class SignUpController {
   handle(httpRequest: HttpRequest<SignUpDto>): HttpResponse {
-    const requiredFields: (keyof SignUpDto)[] = ['name', 'email'];
+    const requiredFields: (keyof SignUpDto)[] = ['name', 'email', 'password'];
 
     const invalidField = requiredFields.find(
       (field) => !httpRequest.body[field]
