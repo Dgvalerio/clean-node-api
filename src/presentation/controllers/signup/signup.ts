@@ -6,7 +6,11 @@ import {
   HttpResponse,
 } from '@/presentation/controllers/signup/signup-protocols';
 import { InvalidParamError, MissingParamError } from '@/presentation/errors';
-import { badRequest, serverError } from '@/presentation/helpers/http-helper';
+import {
+  badRequest,
+  ok,
+  serverError,
+} from '@/presentation/helpers/http-helper';
 
 export interface SignUpDto {
   name?: string;
@@ -51,10 +55,7 @@ export class SignUpController implements Controller {
 
       const account = this.addAccount.add({ name, email, password });
 
-      return {
-        statusCode: 200,
-        body: account,
-      };
+      return ok(account);
     } catch (err) {
       return serverError();
     }
