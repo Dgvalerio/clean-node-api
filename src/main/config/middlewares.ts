@@ -1,6 +1,4 @@
-import { bodyParser } from '@/main/config/middlewares/body-parser';
-import { contentType } from '@/main/config/middlewares/content-type';
-import { cors } from '@/main/config/middlewares/cors';
+import { bodyParser, contentType, cors } from '@/main/middlewares';
 
 import { Express } from 'express';
 
