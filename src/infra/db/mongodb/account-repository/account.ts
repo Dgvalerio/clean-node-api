@@ -9,13 +9,10 @@ export class AccountMongoRepository implements AddAccountRepository {
 
     await accountCollection.insertOne(account);
 
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    const { _id, ...accountWithoutId } = await accountCollection.findOne<
-      AddAccountModel & { _id: string }
-    >({
+    const result = await accountCollection.findOne({
       email: account.email,
     });
 
-    return { ...accountWithoutId, id: _id };
+    return MongoHelpers.map(result);
   }
 }
