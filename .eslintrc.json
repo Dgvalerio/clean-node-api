@@ -115,6 +115,7 @@
     // Project
     "import/prefer-default-export": "off",
     "class-methods-use-this": "off",
-    "import/order": "off"
+    "import/order": "off",
+    "max-classes-per-file": "off"
   }
 }
