@@ -22,7 +22,7 @@ describe('SignUp Routes', () => {
   test('Should return an account on success', async () => {
     const data: SignUpDto = {
       name: 'Davi',
-      email: 'd@v.i',
+      email: 'davi@gmail.com',
       password: '123123',
       passwordConfirmation: '123123',
     };
