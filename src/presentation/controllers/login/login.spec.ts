@@ -2,7 +2,11 @@ import { AccountModel } from '@/domain/models/account';
 import { Authentication } from '@/domain/usecases/authentication';
 import { LoginController } from '@/presentation/controllers/login/login';
 import { InvalidParamError, MissingParamError } from '@/presentation/errors';
-import { badRequest, serverError } from '@/presentation/helpers/http-helper';
+import {
+  badRequest,
+  serverError,
+  unauthorized,
+} from '@/presentation/helpers/http-helper';
 import { HttpRequest } from '@/presentation/protocols';
 import { EmailValidator } from '@/presentation/protocols/email-validator';
 
@@ -124,5 +128,18 @@ describe('Login Controller', () => {
       httpRequest.body.password
     );
     expect(authSpy).toHaveBeenCalledTimes(1);
+  });
+
+  test('Should return 401 if invalid credentials are provided', async () => {
+    const { sut, authenticationStub } = makeSut();
+    const httpRequest = makeFakeRequest();
+
+    jest
+      .spyOn(authenticationStub, 'auth')
+      .mockReturnValueOnce(Promise.resolve(null));
+
+    const httpResponse = await sut.handle(httpRequest);
+
+    expect(httpResponse).toEqual(unauthorized());
   });
 });
