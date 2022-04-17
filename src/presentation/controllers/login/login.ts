@@ -1,5 +1,5 @@
 import { AccountModel } from '@/domain/models/account';
-import { MissingParamError } from '@/presentation/errors';
+import { InvalidParamError, MissingParamError } from '@/presentation/errors';
 import { badRequest } from '@/presentation/helpers/http-helper';
 import {
   Controller,
@@ -23,6 +23,10 @@ export class LoginController implements Controller {
     if (!httpRequest.body.password)
       return Promise.resolve(badRequest(new MissingParamError('password')));
 
-    this.emailValidator.isValid(httpRequest.body.email);
+    const isValid = this.emailValidator.isValid(httpRequest.body.email);
+
+    if (!isValid) {
+      return Promise.resolve(badRequest(new InvalidParamError('email')));
+    }
   }
 }
