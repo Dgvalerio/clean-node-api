@@ -13,9 +13,19 @@ const makeFakeRequest = (): HttpRequest<
   },
 });
 
+interface SutTypes {
+  sut: LoginController;
+}
+
+const makeSut = (): SutTypes => {
+  const sut = new LoginController();
+
+  return { sut };
+};
+
 describe('Login Controller', () => {
   test('Should return 400 if no email is provided', async () => {
-    const sut = new LoginController();
+    const { sut } = makeSut();
     const httpRequest = makeFakeRequest();
 
     delete httpRequest.body.email;
@@ -26,7 +36,7 @@ describe('Login Controller', () => {
   });
 
   test('Should return 400 if no password is provided', async () => {
-    const sut = new LoginController();
+    const { sut } = makeSut();
     const httpRequest = makeFakeRequest();
 
     delete httpRequest.body.password;
