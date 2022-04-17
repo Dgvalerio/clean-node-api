@@ -23,16 +23,20 @@ export class LoginController implements Controller {
     httpRequest: HttpRequest<Pick<AccountModel, 'email' | 'password'>>
   ): Promise<HttpResponse> {
     try {
-      const { email, password } = httpRequest.body;
+      const requiredFields: (keyof Pick<AccountModel, 'email' | 'password'>)[] =
+        ['email', 'password'];
 
-      if (!email) return badRequest(new MissingParamError('email'));
-      if (!password) return badRequest(new MissingParamError('password'));
+      const missingField = requiredFields.find(
+        (field) => !httpRequest.body[field]
+      );
+
+      if (missingField) return badRequest(new MissingParamError(missingField));
+
+      const { email, password } = httpRequest.body;
 
       const isValid = this.emailValidator.isValid(email);
 
-      if (!isValid) {
-        return badRequest(new InvalidParamError('email'));
-      }
+      if (!isValid) return badRequest(new InvalidParamError('email'));
 
       await this.authentication.auth(email, password);
     } catch (error) {
