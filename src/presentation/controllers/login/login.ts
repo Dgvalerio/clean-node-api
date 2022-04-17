@@ -1,17 +1,17 @@
 import { AccountModel } from '@/domain/models/account';
-import { Authentication } from '@/domain/usecases/authentication';
+import {
+  Controller,
+  HttpRequest,
+  HttpResponse,
+  EmailValidator,
+  Authentication,
+} from '@/presentation/controllers/login/login-protocols';
 import { InvalidParamError, MissingParamError } from '@/presentation/errors';
 import {
   badRequest,
   serverError,
   unauthorized,
 } from '@/presentation/helpers/http-helper';
-import {
-  Controller,
-  HttpRequest,
-  HttpResponse,
-} from '@/presentation/protocols';
-import { EmailValidator } from '@/presentation/protocols/email-validator';
 
 export class LoginController implements Controller {
   private readonly emailValidator: EmailValidator;

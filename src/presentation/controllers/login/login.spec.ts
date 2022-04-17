@@ -1,14 +1,16 @@
 import { AccountModel } from '@/domain/models/account';
-import { Authentication } from '@/domain/usecases/authentication';
 import { LoginController } from '@/presentation/controllers/login/login';
+import {
+  HttpRequest,
+  EmailValidator,
+  Authentication,
+} from '@/presentation/controllers/login/login-protocols';
 import { InvalidParamError, MissingParamError } from '@/presentation/errors';
 import {
   badRequest,
   serverError,
   unauthorized,
 } from '@/presentation/helpers/http-helper';
-import { HttpRequest } from '@/presentation/protocols';
-import { EmailValidator } from '@/presentation/protocols/email-validator';
 
 const makeEmailValidator = (): EmailValidator => {
   class EmailValidatorStub implements EmailValidator {
