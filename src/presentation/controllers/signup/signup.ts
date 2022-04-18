@@ -6,7 +6,7 @@ import {
   HttpResponse,
   Validation,
 } from '@/presentation/controllers/signup/signup-protocols';
-import { InvalidParamError, MissingParamError } from '@/presentation/errors';
+import { InvalidParamError } from '@/presentation/errors';
 import {
   badRequest,
   ok,
@@ -42,19 +42,6 @@ export class SignUpController implements Controller {
       const error = this.validation.validate(httpRequest.body);
 
       if (error) return badRequest(error);
-
-      const requiredFields: (keyof SignUpDto)[] = [
-        'name',
-        'email',
-        'password',
-        'passwordConfirmation',
-      ];
-
-      const missingField = requiredFields.find(
-        (field) => !httpRequest.body[field]
-      );
-
-      if (missingField) return badRequest(new MissingParamError(missingField));
 
       const { name, email, password, passwordConfirmation } = httpRequest.body;
 
