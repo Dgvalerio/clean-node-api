@@ -11,7 +11,7 @@ import {
   ok,
   serverError,
   unauthorized,
-} from '@/presentation/helpers/http-helper';
+} from '@/presentation/helpers/http/http-helper';
 
 export class LoginController implements Controller {
   private readonly validation: Validation;
