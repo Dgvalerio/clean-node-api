@@ -3,10 +3,9 @@ import {
   Controller,
   HttpRequest,
   HttpResponse,
-  EmailValidator,
+  Validation,
   Authentication,
 } from '@/presentation/controllers/login/login-protocols';
-import { InvalidParamError, MissingParamError } from '@/presentation/errors';
 import {
   badRequest,
   ok,
@@ -15,12 +14,12 @@ import {
 } from '@/presentation/helpers/http-helper';
 
 export class LoginController implements Controller {
-  private readonly emailValidator: EmailValidator;
+  private readonly validation: Validation;
 
   private readonly authentication: Authentication;
 
-  constructor(emailValidator: EmailValidator, authentication: Authentication) {
-    this.emailValidator = emailValidator;
+  constructor(authentication: Authentication, validation: Validation) {
+    this.validation = validation;
     this.authentication = authentication;
   }
 
@@ -28,20 +27,11 @@ export class LoginController implements Controller {
     httpRequest: HttpRequest<Pick<AccountModel, 'email' | 'password'>>
   ): Promise<HttpResponse> {
     try {
-      const requiredFields: (keyof Pick<AccountModel, 'email' | 'password'>)[] =
-        ['email', 'password'];
+      const error = this.validation.validate(httpRequest.body);
 
-      const missingField = requiredFields.find(
-        (field) => !httpRequest.body[field]
-      );
-
-      if (missingField) return badRequest(new MissingParamError(missingField));
+      if (error) return badRequest(error);
 
       const { email, password } = httpRequest.body;
-
-      const isValid = this.emailValidator.isValid(email);
-
-      if (!isValid) return badRequest(new InvalidParamError('email'));
 
       const accessToken = await this.authentication.auth(email, password);
 
